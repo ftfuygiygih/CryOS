@@ -1,0 +1,100 @@
+name: Build CryOS ISO
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install live-build
+        run: |
+          sudo apt update
+          sudo apt install -y live-build xorriso syslinux-common isolinux
+
+      - name: Configure live-build
+        run: |
+          mkdir cryos-iso && cd cryos-iso
+          lb config \
+            --distribution bookworm \
+            --architecture amd64 \
+            --debian-installer none \
+            --bootappend-live "boot=live quiet splash" \
+            --iso-volume "CryOS" \
+            --mirror-bootstrap "http://deb.debian.org/debian/" \
+            --mirror-chroot "http://deb.debian.org/debian/" \
+            --mirror-binary "http://deb.debian.org/debian/"
+          mkdir -p config/includes.chroot/usr/share/cryos
+          cp -r ../cryos/* config/includes.chroot/usr/share/cryos/
+          mkdir -p config/package-lists
+          cat > config/package-lists/cryos.list.chroot << 'EOF'
+          python3
+          python3-gi
+          python3-gi-cairo
+          gir1.2-gtk-4.0
+          openbox
+          feh
+          xorg
+          lightdm
+          lightdm-gtk-greeter
+          git
+          flatpak
+          os-prober
+          grub-pc
+          grub-efi-amd64
+          rsync
+          parted
+          EOF
+          mkdir -p config/hooks/live
+          cat > config/hooks/live/9000-cryos.hook.chroot << 'HOOKEOF'
+          #!/bin/bash
+          set -e
+          mkdir -p /usr/share/xsessions
+          cat > /usr/share/xsessions/cryos.desktop << XEOF
+          [Desktop Entry]
+          Name=CryOS
+          Exec=python3 /usr/share/cryos/system/session/session.py
+          Type=XSession
+          XEOF
+          for app in desktop files git disk appinstall oobe session install; do
+            cat > /usr/bin/cryos-$app << XEOF
+          #!/bin/sh
+          exec python3 /usr/share/cryos/apps/$app/main.py "\$@"
+          XEOF
+            chmod +x /usr/bin/cryos-$app
+          done
+          cat > /usr/bin/cryos-desktop << XEOF
+          #!/bin/sh
+          exec python3 /usr/share/cryos/desktop/desktop.py "\$@"
+          XEOF
+          chmod +x /usr/bin/cryos-desktop
+          mkdir -p /etc/lightdm
+          cat > /etc/lightdm/lightdm.conf << XEOF
+          [Seat:*]
+          autologin-user=user
+          autologin-user-timeout=0
+          user-session=cryos
+          XEOF
+          HOOKEOF
+          chmod +x config/hooks/live/9000-cryos.hook.chroot
+
+      - name: Build ISO
+        run: |
+          cd cryos-iso
+          sudo lb build 2>&1 | tee build.log
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: cryos-iso/build.log
+
+      - name: Upload ISO
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cryos-iso
+          path: cryos-iso/*.iso
