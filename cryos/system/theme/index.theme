@@ -1,0 +1,37 @@
+[Icon Theme]
+Name=CryOS
+Comment=CryOS pixel icon theme
+Example=folder
+Inherits=Adwaita,hicolor
+
+Directories=16x16/apps,22x22/apps,32x32/apps,16x16/mimetypes,22x22/mimetypes,48x48/apps
+
+[16x16/apps]
+Size=16
+Type=Threshold
+Threshold=2
+
+[22x22/apps]
+Size=22
+Type=Threshold
+Threshold=2
+
+[32x32/apps]
+Size=32
+Type=Threshold
+Threshold=2
+
+[48x48/apps]
+Size=48
+Type=Threshold
+Threshold=2
+
+[16x16/mimetypes]
+Size=16
+Type=Threshold
+Threshold=2
+
+[22x22/mimetypes]
+Size=22
+Type=Threshold
+Threshold=2

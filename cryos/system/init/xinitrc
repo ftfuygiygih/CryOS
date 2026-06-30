@@ -1,0 +1,29 @@
+#!/bin/sh
+# CryOS xinitrc  —  system/init/xinitrc
+# Запускается при 'startx' для инициализации X-сессии CryOS.
+
+# Переменные окружения
+export XDG_SESSION_TYPE=x11
+export XDG_CURRENT_DESKTOP=CryOS
+export GTK_THEME=CryOS
+export QT_QPA_PLATFORMTHEME=gtk4
+
+# Убираем звонок
+xset b off 2>/dev/null || true
+
+# Скорость клавиш
+xset r rate 300 50 2>/dev/null || true
+
+# Настройка DPI
+xrandr --dpi 96 2>/dev/null || true
+
+# Тема курсора
+if [ -d /usr/share/cryos/assets/cursors ]; then
+    xsetroot -cursor_name left_ptr
+fi
+
+# Применяем GTK тему
+export GTK2_RC_FILES=/usr/share/cryos/system/theme/gtkrc-2.0
+
+# Запуск сессии CryOS
+exec python3 /usr/share/cryos/system/session/session.py

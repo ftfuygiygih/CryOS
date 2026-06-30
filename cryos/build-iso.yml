@@ -1,0 +1,40 @@
+name: Build CryOS ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install live-build
+        run: |
+          sudo apt update
+          sudo apt install -y live-build xorriso syslinux-common isolinux
+
+      - name: Configure live-build
+        run: |
+          mkdir cryos-iso && cd cryos-iso
+          lb config \
+            --distribution bookworm \
+            --architecture amd64 \
+            --debian-installer none \
+            --bootappend-live "boot=live quiet splash" \
+            --iso-volume "CryOS"
+          mkdir -p config/includes.chroot/usr/share/cryos
+          cp -r ../cryos/* config/includes.chroot/usr/share/cryos/
+
+      - name: Build ISO
+        run: |
+          cd cryos-iso
+          sudo lb build
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: cryos-iso
+          path: cryos-iso/*.iso

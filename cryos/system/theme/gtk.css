@@ -1,0 +1,376 @@
+/* ============================================================
+   CryOS GTK Theme  —  gtk.css
+   Стиль: Windows 95/98 минимализм, бело-синяя схема
+   ============================================================ */
+
+/* ── Переменные цветовой схемы ─────────────────────────────── */
+@define-color cry_bg          #FFFFFF;
+@define-color cry_bg_alt      #ECE9D8;
+@define-color cry_blue        #000080;
+@define-color cry_blue_mid    #0000AA;
+@define-color cry_blue_light  #1084D0;
+@define-color cry_blue_pale   #D4E4F7;
+@define-color cry_titlebar    #000080;
+@define-color cry_titlebar_fg #FFFFFF;
+@define-color cry_border      #848484;
+@define-color cry_border_dark #0A0A0A;
+@define-color cry_shadow      #DFDFDF;
+@define-color cry_highlight   #FFFFFF;
+@define-color cry_text        #000000;
+@define-color cry_text_inv    #FFFFFF;
+@define-color cry_button_bg   #D4D0C8;
+@define-color cry_button_hover #E8E4DC;
+@define-color cry_selected_bg #000080;
+@define-color cry_selected_fg #FFFFFF;
+@define-color cry_taskbar     #C0C0C0;
+@define-color cry_taskbar_btn #D4D0C8;
+@define-color cry_danger      #CC0000;
+
+/* ── Глобальные настройки ──────────────────────────────────── */
+* {
+    font-family: "Pixel", "Terminus", "Fixedsys Excelsior", "Courier New", monospace;
+    font-size: 11px;
+    color: @cry_text;
+    -gtk-icon-style: symbolic;
+    outline-width: 1px;
+    outline-color: @cry_border_dark;
+}
+
+window {
+    background-color: @cry_bg_alt;
+    border: none;
+}
+
+/* ── Заголовки окон ─────────────────────────────────────────── */
+headerbar,
+.titlebar {
+    background: linear-gradient(to right, @cry_blue, @cry_blue_light);
+    color: @cry_titlebar_fg;
+    border-bottom: 2px solid @cry_border_dark;
+    padding: 2px 4px;
+    min-height: 22px;
+    border-radius: 0;
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 0px;
+}
+
+headerbar .title {
+    color: @cry_titlebar_fg;
+    font-weight: bold;
+    font-size: 11px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+/* Кнопки заголовка — стиль Win95 */
+headerbar button {
+    background: @cry_button_bg;
+    border: none;
+    border-top: 2px solid @cry_highlight;
+    border-left: 2px solid @cry_highlight;
+    border-right: 2px solid @cry_border_dark;
+    border-bottom: 2px solid @cry_border_dark;
+    padding: 1px 3px;
+    min-width: 16px;
+    min-height: 14px;
+    border-radius: 0;
+    color: @cry_text;
+    font-size: 9px;
+}
+
+headerbar button:hover {
+    background: @cry_button_hover;
+}
+
+headerbar button:active {
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+    border-bottom: 2px solid @cry_highlight;
+}
+
+/* ── Кнопки ────────────────────────────────────────────────── */
+button {
+    background: @cry_button_bg;
+    border: none;
+    border-top: 2px solid @cry_highlight;
+    border-left: 2px solid @cry_highlight;
+    border-right: 2px solid @cry_border_dark;
+    border-bottom: 2px solid @cry_border_dark;
+    padding: 3px 12px;
+    border-radius: 0;
+    min-height: 23px;
+    color: @cry_text;
+}
+
+button:hover {
+    background: @cry_button_hover;
+}
+
+button:active,
+button:checked {
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+    border-bottom: 2px solid @cry_highlight;
+    padding: 4px 11px 2px 13px;
+}
+
+button:disabled {
+    color: @cry_border;
+}
+
+button.suggested-action {
+    background: @cry_blue;
+    color: @cry_text_inv;
+}
+
+button.destructive-action {
+    background: @cry_danger;
+    color: @cry_text_inv;
+}
+
+/* ── Текстовые поля ─────────────────────────────────────────── */
+entry {
+    background: @cry_bg;
+    border: none;
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+    border-bottom: 2px solid @cry_highlight;
+    border-radius: 0;
+    padding: 2px 4px;
+    min-height: 20px;
+    color: @cry_text;
+    caret-color: @cry_text;
+}
+
+entry:focus {
+    outline: 1px dotted @cry_text;
+    outline-offset: -3px;
+}
+
+/* ── Списки и выделение ─────────────────────────────────────── */
+listview,
+treeview,
+.view {
+    background: @cry_bg;
+    border: none;
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+    border-bottom: 2px solid @cry_highlight;
+}
+
+listview row:selected,
+treeview row:selected,
+row:selected {
+    background: @cry_selected_bg;
+    color: @cry_selected_fg;
+}
+
+listview row:hover,
+treeview row:hover {
+    background: @cry_blue_pale;
+}
+
+/* ── Меню ───────────────────────────────────────────────────── */
+menu,
+popover.menu {
+    background: @cry_button_bg;
+    border: 2px solid @cry_border_dark;
+    border-radius: 0;
+    padding: 2px;
+    box-shadow: 2px 2px 0 @cry_border_dark;
+}
+
+menuitem {
+    padding: 2px 20px;
+    border-radius: 0;
+}
+
+menuitem:hover {
+    background: @cry_selected_bg;
+    color: @cry_selected_fg;
+}
+
+separator.horizontal,
+menu separator {
+    background: @cry_border;
+    min-height: 1px;
+    margin: 2px 2px;
+}
+
+/* ── Прокрутка ──────────────────────────────────────────────── */
+scrollbar {
+    background: @cry_button_bg;
+    border-left: 1px solid @cry_border;
+}
+
+scrollbar slider {
+    background: @cry_button_bg;
+    border: none;
+    border-top: 2px solid @cry_highlight;
+    border-left: 2px solid @cry_highlight;
+    border-right: 2px solid @cry_border_dark;
+    border-bottom: 2px solid @cry_border_dark;
+    min-width: 16px;
+    min-height: 16px;
+    border-radius: 0;
+}
+
+scrollbar button {
+    min-width: 16px;
+    min-height: 16px;
+    padding: 0;
+}
+
+/* ── Прогресс-бар ───────────────────────────────────────────── */
+progressbar {
+    min-height: 18px;
+}
+
+progressbar trough {
+    background: @cry_bg;
+    border: none;
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+    border-bottom: 2px solid @cry_highlight;
+    border-radius: 0;
+}
+
+progressbar progress {
+    background: linear-gradient(to right, @cry_blue, @cry_blue_light);
+    border-radius: 0;
+    min-height: 14px;
+}
+
+/* ── Диалоги ────────────────────────────────────────────────── */
+dialog {
+    background: @cry_button_bg;
+    border: 2px solid @cry_border_dark;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+}
+
+.dialog-action-area {
+    background: @cry_button_bg;
+    border-top: 1px solid @cry_border;
+    padding: 6px;
+}
+
+/* ── Вкладки ────────────────────────────────────────────────── */
+notebook > header {
+    background: @cry_button_bg;
+    border-bottom: 2px solid @cry_border_dark;
+    padding: 0;
+}
+
+notebook > header tab {
+    background: @cry_bg_alt;
+    border: 2px solid @cry_border;
+    border-bottom: none;
+    margin-right: 2px;
+    padding: 2px 8px;
+    border-radius: 0;
+}
+
+notebook > header tab:checked {
+    background: @cry_button_bg;
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+}
+
+/* ── Чекбоксы и радиокнопки ─────────────────────────────────── */
+checkbutton check,
+radiobutton radio {
+    background: @cry_bg;
+    border: 2px solid @cry_border_dark;
+    border-radius: 0;
+    min-width: 13px;
+    min-height: 13px;
+}
+
+checkbutton check:checked,
+radiobutton radio:checked {
+    background: @cry_bg;
+    color: @cry_text;
+}
+
+/* ── Тулбар ─────────────────────────────────────────────────── */
+toolbar {
+    background: @cry_button_bg;
+    border-bottom: 1px solid @cry_border;
+    padding: 2px;
+}
+
+toolbar button {
+    min-width: 24px;
+    min-height: 24px;
+    padding: 2px;
+}
+
+/* ── Статус-бар ─────────────────────────────────────────────── */
+statusbar {
+    background: @cry_button_bg;
+    border-top: 1px solid @cry_border;
+    padding: 2px 4px;
+    font-size: 10px;
+}
+
+/* ── Специальные классы CryOS ───────────────────────────────── */
+.cry-panel {
+    background: @cry_taskbar;
+    border-top: 2px solid @cry_highlight;
+    padding: 2px 4px;
+    min-height: 30px;
+}
+
+.cry-start-button {
+    background: @cry_button_bg;
+    border-top: 2px solid @cry_highlight;
+    border-left: 2px solid @cry_highlight;
+    border-right: 2px solid @cry_border_dark;
+    border-bottom: 2px solid @cry_border_dark;
+    padding: 2px 8px;
+    font-weight: bold;
+    min-height: 24px;
+}
+
+.cry-start-button:active {
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+    border-bottom: 2px solid @cry_highlight;
+}
+
+.cry-taskbar-clock {
+    background: @cry_button_bg;
+    border: none;
+    border-top: 2px solid @cry_border_dark;
+    border-left: 2px solid @cry_border_dark;
+    border-right: 2px solid @cry_highlight;
+    border-bottom: 2px solid @cry_highlight;
+    padding: 2px 6px;
+    font-size: 11px;
+}
+
+.cry-secret-folder {
+    color: @cry_blue_mid;
+    font-style: italic;
+}
+
+.cry-oobe-bg {
+    background: @cry_bg;
+}
+
+.cry-oobe-header {
+    background: linear-gradient(to right, @cry_blue, @cry_blue_light);
+    color: @cry_text_inv;
+    padding: 16px;
+}
+
+.cry-warning-dialog {
+    border: 3px solid @cry_danger;
+}
