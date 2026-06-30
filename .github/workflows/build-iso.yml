@@ -18,6 +18,7 @@ jobs:
         run: |
           mkdir cryos-iso && cd cryos-iso
           lb config \
+            --mode debian \
             --distribution bookworm \
             --architecture amd64 \
             --debian-installer none \
@@ -25,7 +26,9 @@ jobs:
             --iso-volume "CryOS" \
             --mirror-bootstrap "http://deb.debian.org/debian/" \
             --mirror-chroot "http://deb.debian.org/debian/" \
-            --mirror-binary "http://deb.debian.org/debian/"
+            --mirror-chroot-security "http://deb.debian.org/debian-security/" \
+            --mirror-binary "http://deb.debian.org/debian/" \
+            --mirror-binary-security "http://deb.debian.org/debian-security/"
           mkdir -p config/includes.chroot/usr/share/cryos
           cp -r ../cryos/* config/includes.chroot/usr/share/cryos/
           mkdir -p config/package-lists
